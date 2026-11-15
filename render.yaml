@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: canteen-app
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/menu
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_HOST
+        fromDatabase:
+          name: canteen-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: canteen-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: canteen-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: canteen-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: canteen-db
+          property: password
+      - key: CANTEEN_ADMIN_PASSWORD
+        sync: false
+
+databases:
+  - name: canteen-db
+    databaseName: canteen
+    user: canteen
+    plan: free
