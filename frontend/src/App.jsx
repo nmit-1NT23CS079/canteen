@@ -64,7 +64,7 @@ export default function App() {
       </header>
 
       <main>
-        {view === 'menu' && user.role === 'STUDENT' && <Menu onAdd={addToCart} />}
+        {view === 'menu' && user.role === 'STUDENT' && <Menu cart={cart} onAdd={addToCart} onQty={changeQty} />}
         {view === 'cart' && (
           <Cart cart={cart} onQty={changeQty} onAdd={addToCart} onPlaced={() => { setCart([]); setView('orders'); }} />
         )}
