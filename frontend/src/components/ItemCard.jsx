@@ -1,4 +1,4 @@
-export default function ItemCard({ item, onAdd }) {
+export default function ItemCard({ item, quantity = 0, onAdd, onQty }) {
   return (
     <div className="card">
       <div className="card-head">
@@ -9,9 +9,17 @@ export default function ItemCard({ item, onAdd }) {
       <p className="desc">{item.description}</p>
       <div className="card-foot">
         <strong>₹{item.price}</strong>
-        <button className="primary" disabled={!item.available} onClick={() => onAdd(item)}>
-          {item.available ? 'Add' : 'Unavailable'}
-        </button>
+        {!item.available ? (
+          <button className="primary" disabled>Unavailable</button>
+        ) : quantity === 0 ? (
+          <button className="primary" onClick={() => onAdd(item)}>Add</button>
+        ) : (
+          <div className="qty-control">
+            <button onClick={() => onQty(item.id, -1)}>−</button>
+            <span className="qty-num">{quantity}</span>
+            <button onClick={() => onQty(item.id, 1)}>+</button>
+          </div>
+        )}
       </div>
     </div>
   );
