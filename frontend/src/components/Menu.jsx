@@ -4,7 +4,7 @@ import ItemCard from './ItemCard';
 
 const CATEGORIES = ['', 'Breakfast', 'Meals', 'Snacks', 'Beverages'];
 
-export default function Menu({ onAdd }) {
+export default function Menu({ cart = [], onAdd, onQty }) {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState('');
   const [veg, setVeg] = useState('');
@@ -75,7 +75,13 @@ export default function Menu({ onAdd }) {
 
       {error && <div className="err">{error}</div>}
       <div className="grid">
-        {items.map((i) => <ItemCard key={i.id} item={i} onAdd={onAdd} />)}
+        {items.map((i) => <ItemCard
+            key={i.id}
+            item={i}
+            quantity={cart.find((x) => x.item.id === i.id)?.quantity || 0}
+            onAdd={onAdd}
+            onQty={onQty}
+          />)}
         {items.length === 0 && <p>No items found.</p>}
       </div>
     </section>
